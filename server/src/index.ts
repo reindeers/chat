@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const Pusher = require('pusher');
+const cors = require('cors');
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
@@ -15,6 +16,20 @@ let pusher = new Pusher({
     encrypted: true
 });
 
-pusher.trigger('my-channel', 'my-event', {
-    "message": "hello world"
+app.use(cors());
+app.use(express.json());
+
+app.get('/', function(req, res) {
+    res.status(200).send({ service: 'Pusher activity feed API' });
+});
+
+app.post('/submit', (req, res) => {
+    const title = req.body.title;
+    const body = req.body.body;
+    pusher.trigger('realtime-feeds', 'posts', {
+        "message": "hello world"
+    });
+    res
+        .status(200)
+        .send({ message: 'Post was successfully created', status: true });
 });

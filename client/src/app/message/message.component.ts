@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'chat-body',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  selector: 'message',
+  templateUrl: './message.component.html',
+  styleUrls: ['./message.component.css']
 })
-export class ChatComponent {
+export class MessageComponent {
 
   constructor(){
 
