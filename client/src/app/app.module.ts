@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {UserListComponent} from "./user.list/user.component";
+import {MaterialComponentModule} from "./material.component";
 
 @NgModule({
   declarations: [
-    AppComponent, UserListComponent
+    AppComponent, MaterialComponentModule
   ],
   imports: [
     BrowserModule
