@@ -19,17 +19,31 @@ let pusher = new Pusher({
 app.use(cors());
 app.use(express.json());
 
-app.get('/', function(req, res) {
-    res.status(200).send({ service: 'Pusher activity feed API' });
+app.get('/', function (req, res) {
+    res.status(200).send({service: 'Pusher activity feed API'});
+});
+
+app.post('/change', (req, res) => {
+    const userId = req.body.id;
+    const data = {
+        userId
+    };
+    pusher.trigger('counter', 'user', data);
+    res
+        .status(200)
+        .send({message: 'User was select', status: true});
 });
 
 app.post('/submit', (req, res) => {
-    const title = req.body.title;
-    const body = req.body.body;
-    pusher.trigger('realtime-feeds', 'posts', {
-        "message": "hello world"
+    const {body} = req;
+    const {text, name} = body; //todo
+    pusher.trigger(['feeds', 'counter'], 'posts', {
+        text,
+        name,
+        createdAt: new Date(),
+        status: 'ACTIVE' //todo
     });
     res
         .status(200)
-        .send({ message: 'Post was successfully created', status: true });
+        .send({message: 'Post was successfully created', status: true});
 });
