@@ -19,7 +19,9 @@ export class PusherService {
       forceTLS: true
     });
 
-    let channel = pusher.subscribe('realtime-feeds');
+    let channel = pusher.subscribe('feeds');
+    let channelUser = pusher.subscribe('counter');
+
     channel.bind(
       'posts',
       (data: { author: string; content: string; createdAt: Date, status: FeedStatus }) => {
@@ -28,14 +30,23 @@ export class PusherService {
         );
       }
     );
-    channel.bind(
-      'users',
+
+    channelUser.bind(
+      'user',
       (data: {id: number, name: string, group: UserGroup}) => {
         this.subjectUser.next(
           {id: data.id, name: data.name, group: data.group}
         )
       }
-    )
+    );
+    channelUser.bind(
+      'posts',
+      (data: {id: number, name: string, group: UserGroup}) => {
+        this.subjectUser.next(
+          {id: data.id, name: data.name, group: data.group}
+        )
+      }
+    );
 
 
   }
