@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {User} from "../../model/User";
 
 @Component({
-  selector: 'user-list',
+  selector: 'user-item',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserListComponent {
+export class UserComponent implements OnInit{
+  @Input() user: User;
+  @Output() select = new EventEmitter();
 
   constructor(){
 
   }
+  ngOnInit(){}
 
 }

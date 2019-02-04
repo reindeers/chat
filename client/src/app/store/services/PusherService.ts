@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import Pusher from 'pusher-js';
-import {Feed, FeedStatus} from "../model/Feed";
-import {User, UserGroup} from "../model/User";
+import {Feed, FeedStatus} from "../../model/Feed";
+import {User, UserGroup} from "../../model/User";
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PusherService {
   private subject: Subject<Feed> = new Subject<Feed>();
   private subjectUser: Subject<User> = new Subject<User>()
@@ -40,12 +38,14 @@ export class PusherService {
 
   }
 
-  getFeedItems(): Observable<Feed> {
-    return this.subject.asObservable();
+  getFeedItems(): Observable<Feed[]> {
+    return new Observable()
+   // return this.subject.asObservable();
   }
 
-  getUserItems(): Observable<User> {
-    return this.subjectUser.asObservable();
+  getUserItems(): Observable<User[]> {
+    return new Observable()
+   // return this.subjectUser.asObservable();
 
   }
 }

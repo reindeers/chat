@@ -2,14 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {UserListComponent} from "./user.list/user.component";
+import {UserListComponent} from "./components/user.list/user-list.component";
+import {UserComponent} from "./components/user.list/user.component";
+import {MessageComponent} from "./components/message/message.component";
+import {EffectsModule} from "@ngrx/effects";
+import {UserEffects} from "./store/services/UserEffects";
 
 @NgModule({
   declarations: [
-    AppComponent, UserListComponent
+    AppComponent, UserListComponent, UserComponent, MessageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, EffectsModule.forRoot([UserEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

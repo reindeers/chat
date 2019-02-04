@@ -1,3 +1,8 @@
-<div>
-  <user-list></user-list>
-</div>
+<main class="container">
+  <user-list
+    [users]="users$ | async"
+    (select)="onSelect($event)">
+  </user-list>
+  <!--<app-film-selected [film]="selected$ | async">
+  </app-film-selected>-->
+</main>
