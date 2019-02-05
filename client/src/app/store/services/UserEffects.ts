@@ -1,10 +1,9 @@
-import * as fromRoot from '../../store/reducers';
 import * as userAction from '../actions/users';
 import * as fromServices from './PusherService';
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {catchError, map, switchMap} from "rxjs/internal/operators";
-import {of} from "rxjs/index";
+import {EMPTY, of} from "rxjs/index";
 
 @Injectable()
 export class UserEffects {
@@ -21,5 +20,25 @@ export class UserEffects {
           catchError(error => of(new userAction.LoadUsersFail(error)))
         )
     })
-  )
+  );
+
+  @Effect()
+  changeUser$ = (id) =>this.actions$.pipe(ofType(userAction.SELECT),
+    switchMap(() => {
+      return this.pusherService.changeUser(id)
+        .pipe(
+          map(user => new userAction.ChangeUserSuccess(id)), //todo select
+          catchError(() => EMPTY)
+        )
+    }));
+
+  /*@Effect()
+  addPost$ = (id) =>this.actions$.pipe(ofType(),
+    switchMap(() => {
+      return this.pusherService.changeUser(id)
+        .pipe(
+          map(i => new userAction.ChangeUserSuccess(i)),
+          catchError(() => EMPTY)
+        )
+    }))*/
 }

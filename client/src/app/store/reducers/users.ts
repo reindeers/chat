@@ -34,7 +34,7 @@ export function reducer(state = initialState, action: userAction.Action){
         users: {...state.ids, newUser}
       };
     }
-    case userAction.SELECT: {
+    case userAction.CHANGE_USER_SUCCESS: {
       const id = action.payload;
       return {
         ...state,

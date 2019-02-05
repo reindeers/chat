@@ -8,15 +8,19 @@ import {UserComponent} from "./components/user.list/user.component";
 import {MessageComponent} from "./components/message/message.component";
 import {EffectsModule} from "@ngrx/effects";
 import {UserEffects} from "./store/services/UserEffects";
+import {StoreModule} from "@ngrx/store";
+import {reducers} from "./store/reducers";
+import {PusherService} from "./store/services/PusherService";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
-    AppComponent, MaterialComponentModule, UserListComponent, UserComponent, MessageComponent
+    AppComponent, UserListComponent, UserComponent, MessageComponent
   ],
   imports: [
-    BrowserModule, EffectsModule.forRoot([UserEffects])
+    BrowserModule, StoreModule.forRoot(reducers), EffectsModule.forRoot([UserEffects]), MaterialComponentModule, HttpClientModule
   ],
-  providers: [],
+  providers: [PusherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

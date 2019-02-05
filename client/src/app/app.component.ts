@@ -13,11 +13,9 @@ import {Store} from "@ngrx/store";
 })
 export class AppComponent {
   users$: Observable<User[]>;
-  selected$: Observable<any>;
 
   constructor(private store: Store<fromRoot.State>){
     this.users$ = store.select(fromRoot.getAllUsers);
-    this.selected$ = store.select(fromRoot.getSelectUser);
   }
 
   onSelect(id: number){

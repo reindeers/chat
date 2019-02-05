@@ -17,6 +17,10 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "pusher": "^2.2.0"
+    "cors": "^2.8.5",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.0",
+    "pusher": "^2.2.0",
+    "typescript": "^3.3.1"
   }
 }

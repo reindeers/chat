@@ -1,1 +1,3 @@
-<mat-button-toggle value="bold">{{user.name}}  {{user.counter}}</mat-button-toggle>
+<mat-button-toggle value="bold" (click)="select.emit(user.id)">
+  {{user.name}}  {{user.counter}}
+</mat-button-toggle>

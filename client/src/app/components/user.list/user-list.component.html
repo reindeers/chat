@@ -1,3 +1,6 @@
-<mat-button-toggle-group name="userItem" aria-label="user items" *ngFor="let item in items">
-  <user-item></user-item>
+<mat-button-toggle-group name="userItem" aria-label="user items">
+  <user-item *ngFor="let user of users"
+             [user]="user"
+             (select)="select.emit($event)">
+  </user-item>
 </mat-button-toggle-group>

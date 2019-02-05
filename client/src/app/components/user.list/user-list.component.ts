@@ -1,17 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../model/User";
 import {OnChanges} from "@angular/core";
+import * as userAction from "../../store/actions/users";
+import {Store} from "@ngrx/store";
+import * as fromRoot from "../../store/reducers";
 
 @Component({
   selector: 'user-list',
-  template: `
-    <div class="list">
-      <user-item *ngFor="let user of users"
-                 [user]="user"
-                 (select)="select.emit($event)">
-      </user-item>
-    </div>
-  `,
+  templateUrl: './user-list.component.html',
   styles: [`
     .list {
       display: flex;
@@ -23,11 +19,12 @@ export class UserListComponent implements OnInit, OnChanges {
   @Input() users: User[];
   @Output() select = new EventEmitter();
 
-  constructor() {
+  constructor(private store: Store<fromRoot.State>) {
 
   }
 
   ngOnInit() {
+  //  this.store.dispatch(new userAction.LoadUsers()); //todo unsubscribe
   }
 
   ngOnChanges(){}
