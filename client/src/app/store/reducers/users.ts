@@ -11,13 +11,13 @@ export const initialState: State = {
   ids: [1, 2, 3],
   users: {
     1: {
-      id: 1, name: "Вася", group: UserGroup.USER
+      id: 1, name: "Вася", group: UserGroup.USER, counter: 0
     },
     2: {
-      id: 2, name: "Петя", group: UserGroup.USER
+      id: 2, name: "Петя", group: UserGroup.USER, counter: 0
     },
     3: {
-      id: 3, name: "админ", group: UserGroup.ADMIN
+      id: 3, name: "админ", group: UserGroup.ADMIN, counter: 0
     }
   },
   selected: null
@@ -31,10 +31,10 @@ export function reducer(state = initialState, action: userAction.Action){
       return{
         ...state,
         ids: [...state.ids, newUser.id],
-        users: {...state.ids, newUser}
+        users: [...state.ids, newUser]
       };
     }
-    case userAction.CHANGE_USER_SUCCESS: {
+    case userAction.SELECT: {
       const id = action.payload;
       return {
         ...state,

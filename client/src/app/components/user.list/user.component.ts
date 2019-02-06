@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {User} from "../../model/User";
 import * as fromRoot from "../../store/reducers";
 import {Store} from "@ngrx/store";
@@ -10,21 +10,22 @@ import * as userAction from "../../store/actions/users";
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit, OnChanges{
   @Input() user: User;
+  @Input() slctUsr: User;
   @Output() select = new EventEmitter();
-  selected$: Observable<any>;
   isSelect: boolean = false;
 
   constructor(private store: Store<fromRoot.State>){
 
   }
   ngOnInit(){
-    this.selected$ = this.store.select(fromRoot.getSelectUser);
-    this.selected$.subscribe(s => {
-      this.isSelect = s == this.user.id;
-      this.store.dispatch(new userAction.Select(this.user.id));
-    })
+
+    //this.store.dispatch(new userAction.Select(this.user.id));
+  }
+
+  ngOnChanges(){
+    this.isSelect = this.slctUsr.id == this.user.id;
   }
 
 }

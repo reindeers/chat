@@ -3,6 +3,7 @@ import { ActionReducerMap, createSelector, createFeatureSelector,
 
 import * as fromUsers from './users';
 import * as fromFeed from './feed';
+import {Feed} from "../../model/Feed";
 
 export interface State {
   users: fromUsers.State,
@@ -63,35 +64,12 @@ export const getAllUsers = createSelector(
 export const getFeedState =
   createFeatureSelector<fromFeed.State>('feed');
 
-export const getFeedIds= createSelector(
-  getFeedState,
-  fromFeed.getIds
-)
-
 export const getFeed = createSelector(
   getFeedState,
   fromFeed.getFeed
-)
-
-export const getFeedSelected = createSelector(
-  getFeedState,
-  fromFeed.getSelected
-)
-
-export const getSelectFeed = createSelector(
-  getFeedSelected,
-  getFeed,
-  (id, feed) =>{
-    return {
-      ...feed[id]
-    }
-  }
 );
 
 export const getAllFeed = createSelector(
-  getFeedIds,
   getFeed,
-  (ids, feed) => {
-    return ids.map(id => feed[id]);
-  }
+  (feed : Feed[]) => feed
 );

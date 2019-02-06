@@ -1,7 +1,8 @@
 export interface User {
   id: number,
   name: string,
-  group: UserGroup
+  group: UserGroup,
+  counter: number,
 }
 
 export enum UserGroup {

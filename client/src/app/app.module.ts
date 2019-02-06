@@ -12,13 +12,17 @@ import {StoreModule} from "@ngrx/store";
 import {reducers} from "./store/reducers";
 import {PusherService} from "./store/services/PusherService";
 import {HttpClientModule} from "@angular/common/http";
+import {MessageListComponent} from "./components/message/message-list.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FeedEffects} from "./store/services/feed.effects";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
-    AppComponent, UserListComponent, UserComponent, MessageComponent
+    AppComponent, UserListComponent, UserComponent, MessageComponent, MessageListComponent
   ],
   imports: [
-    BrowserModule, StoreModule.forRoot(reducers), EffectsModule.forRoot([UserEffects]), MaterialComponentModule, HttpClientModule
+    BrowserModule, StoreModule.forRoot(reducers), EffectsModule.forRoot([UserEffects,  FeedEffects]), MaterialComponentModule, HttpClientModule, BrowserAnimationsModule, FormsModule
   ],
   providers: [PusherService],
   bootstrap: [AppComponent]

@@ -28,7 +28,7 @@ export class LoadUsersSuccess implements Action {
 }
 export class ChangeUserSuccess implements Action {
   readonly type = CHANGE_USER_SUCCESS;
-  constructor(public payload: number){}
+  constructor(){}
 }
 
 export class LoadUsersFail implements Action {

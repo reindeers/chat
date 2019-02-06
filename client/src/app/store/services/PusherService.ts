@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import {Subject, Observable, of} from 'rxjs';
 import Pusher from 'pusher-js';
 import {Feed, FeedStatus} from "../../model/Feed";
 import {User, UserGroup} from "../../model/User";
@@ -32,17 +32,17 @@ export class PusherService {
 
     channelUser.bind(
       'user',
-      (data: {id: number, name: string, group: UserGroup}) => {
+      (data: {id: number, name: string, group: UserGroup, counter: number}) => {
         this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group} //update count
+          {id: data.id, name: data.name, group: data.group, counter: data.counter} //update count
         )
       }
     );
     channelUser.bind(
       'posts',
-      (data: {id: number, name: string, group: UserGroup}) => {
+      (data: {id: number, name: string, group: UserGroup, counter: number}) => {
         this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group} //update counts
+          {id: data.id, name: data.name, group: data.group, counter: data.counter} //update counts
         )
       }
     );
@@ -50,26 +50,21 @@ export class PusherService {
 
   }
 
-  getFeedItems(): Observable<Feed[]> {
-    return new Observable()
-   // return this.subject.asObservable();
+  getFeedItems(): Observable<Feed> {
+    return this.subject.asObservable();
   }
 
-  getUserItems(): Observable<User[]> {
-    return new Observable()
-   // return this.subjectUser.asObservable();
-
+  getUserItems(): Observable<User> {
+    return this.subjectUser.asObservable();
   }
 
-  changeUser(id) {
-    this.http.post('http://localhost:3000/change', {'id': id})
-      .subscribe(data => {});
-    return new Observable() //todo
+  changeUser(id){
+    this.http.post('http://localhost:3000/change', {'id': id}); //todo Обработка ошибок
+    return of(id)
   }
 
-  addPost(msg: Feed){
-    this.http.post('http://localhost:3000/submit', msg)
-      .subscribe(data => {});
-    return new Observable()
+  addPost(msg: Feed) : Observable<Feed> {
+    this.http.post('http://localhost:3000/submit', msg);
+    return of(msg)
   }
 }

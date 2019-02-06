@@ -1,8 +1,20 @@
-<main class="container">
-  <user-list
-    [users]="users$ | async"
-    (select)="onSelect($event)">
-  </user-list>
-  <!--<app-film-selected [film]="selected$ | async">
-  </app-film-selected>-->
-</main>
+<mat-card class="container">
+  <mat-card>
+    <user-list
+      [users]="users$ | async"
+      [slctUsr]="selectUser$ | async"
+      (select)="onSelect($event)">
+    </user-list>
+  </mat-card>
+  <message-list
+    [feed]="feed$ | async">
+  </message-list>
+  <form class="form">
+    <mat-form-field class="message">
+      <input matInput #message maxlength="256" placeholder="Message" [(ngModel)]="currentText" name="text">
+      <mat-hint align="start"><strong>Введите сообщение</strong> </mat-hint>
+      <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="add()">отправить</button>
+  </form>
+</mat-card>
