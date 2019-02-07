@@ -24,9 +24,9 @@ export class FeedEffects {
   @Effect()
   addPost$ =  this.actions$.pipe(
     ofType(feedAction.ADD_ONE),
-    mergeMap(action =>  this.pusherService.addPost(action.payload)
+    mergeMap((action: any) =>  this.pusherService.addPost(action.payload)
         .pipe(
-          map(m => new feedAction.AddOneSuccess()),
+          map(m => new feedAction.AddOneSuccess(m)),
           catchError(() => EMPTY) //todo
         )
     )

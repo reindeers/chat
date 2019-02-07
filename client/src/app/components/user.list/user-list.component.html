@@ -1,7 +1,7 @@
 <mat-button-toggle-group name="userItem" aria-label="user items">
   <user-item *ngFor="let user of users"
              [user]="user"
-             [slctUsr]="slctUsr"
+             [slctUsr]="usr"
              (select)="select.emit($event)">
   </user-item>
 </mat-button-toggle-group>

@@ -3,6 +3,7 @@ export interface User {
   name: string,
   group: UserGroup,
   counter: number,
+  lastLogin: Date
 }
 
 export enum UserGroup {

@@ -22,7 +22,7 @@ export const initialState: State = {
   ]
 };
 
-export function reducer(state = initialState, action: feedAction.Action){
+export function reducer(state = initialState, action: feedAction.Action) : State{
   switch(action.type){
     case feedAction.ADD_ONE: {
       const newFeed: Feed = action.payload;
@@ -40,7 +40,7 @@ export function reducer(state = initialState, action: feedAction.Action){
       const editFeed: Feed = action.payload;
       return{
         ...state,
-        feed: {...state.feed, editFeed}
+        feed: [...state.feed, editFeed]
       };
     }
     case feedAction.LOAD_FEED_SUCCESS: {
@@ -52,7 +52,7 @@ export function reducer(state = initialState, action: feedAction.Action){
       const feed: Feed = action.payload;
       return{
         ...state,
-        feed: {...state.feed, feed}
+        feed: [...state.feed, feed]
       }
 
     }

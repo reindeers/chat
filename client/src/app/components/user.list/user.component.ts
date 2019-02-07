@@ -20,12 +20,12 @@ export class UserComponent implements OnInit, OnChanges{
 
   }
   ngOnInit(){
-
-    //this.store.dispatch(new userAction.Select(this.user.id));
+    this.isSelect = this.slctUsr.id == this.user.id;
   }
 
   ngOnChanges(){
-    this.isSelect = this.slctUsr.id == this.user.id;
+
+
   }
 
 }

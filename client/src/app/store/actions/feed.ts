@@ -15,7 +15,7 @@ export class AddOne implements Action {
 
 export class AddOneSuccess implements Action {
   readonly type = ADD_ONE_SUCCESS;
-  constructor(){}
+  constructor(public payload: any){}
 }
 
 export class EditOne implements Action {
@@ -25,7 +25,7 @@ export class EditOne implements Action {
 
 export class LoadFeed implements Action {
   readonly type = LOAD_FEED;
-  constructor(){}
+  constructor(public payload: any){}
 }
 export class LoadFeedSuccess implements Action {
   readonly type = LOAD_FEED_SUCCESS;

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   selectUser$: Observable<User>;
   user: User;
   msgCounter: number = 0;
-  currentText: String = '';
+  currentText: string = '';
 
   constructor(private store: Store<fromRoot.State>) {
     this.users$ = store.select(fromRoot.getAllUsers);
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.store.dispatch(new feedAction.LoadFeed());
+    this.store.dispatch(new feedAction.LoadFeed(null));
 
     this.selectUser$.subscribe(s => { //todo unsubscribe
       this.user = s; //todo ?
@@ -42,6 +42,10 @@ export class AppComponent implements OnInit {
 
   onSelect(id: number){
     this.store.dispatch(new userAction.Select(id));
+
+   /* let usr = Object.assign({}, this.user);
+    usr.lastLogin = new Date();
+    this.store.dispatch(new userAction.EditOne(usr))*/
   }
 
   add(){

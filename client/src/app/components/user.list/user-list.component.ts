@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../model/User";
 import {OnChanges} from "@angular/core";
+import * as userAction from "../../store/actions/users";
+import {Store} from "@ngrx/store";
+import * as fromRoot from "../../store/reducers";
 
 @Component({
   selector: 'user-list',
@@ -17,14 +20,15 @@ export class UserListComponent implements OnInit, OnChanges {
   @Input() slctUsr: User;
   @Output() select = new EventEmitter();
 
-  constructor() {}
+  constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit() {
+
   //  this.store.dispatch(new userAction.LoadUsers()); //todo unsubscribe
   }
 
   ngOnChanges(){
-    console.log(this.slctUsr)
+
   }
 
 }

@@ -25,24 +25,24 @@ export class PusherService {
       'posts',
       (data: { id: number, author: string; content: string; createdAt: Date, status: FeedStatus }) => {
         this.subject.next(
-          {id: data.id, author: data.author, content: data.content, createdAt: data.createdAt, status: data.status} //add msg
+          {id: data.id, author: data.author, content: data.content, createdAt: data.createdAt, status: data.status}
         );
       }
     );
 
     channelUser.bind(
       'user',
-      (data: {id: number, name: string, group: UserGroup, counter: number}) => {
+      (data: {id: number, name: string, group: UserGroup, counter: number, lastLogin: Date}) => {
         this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group, counter: data.counter} //update count
+          {id: data.id, name: data.name, group: data.group, counter: data.counter, lastLogin: data.lastLogin}
         )
       }
     );
     channelUser.bind(
       'posts',
-      (data: {id: number, name: string, group: UserGroup, counter: number}) => {
+      (data: {id: number, name: string, group: UserGroup, counter: number, lastLogin: Date}) => {
         this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group, counter: data.counter} //update counts
+          {id: data.id, name: data.name, group: data.group, counter: data.counter, lastLogin: data.lastLogin}
         )
       }
     );
