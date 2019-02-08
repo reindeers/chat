@@ -6,7 +6,7 @@
     <p>{{msg.content}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>удалить</button>
-    <button mat-button>редактировать</button>
+    <button mat-button color="primary" *ngIf="isDeleteMsg()">удалить</button>
+    <button mat-button color="primary" *ngIf="isEditableMsg()">редактировать</button>
   </mat-card-actions>
 </mat-card>

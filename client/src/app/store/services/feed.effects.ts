@@ -1,4 +1,5 @@
 import * as feedAction from '../actions/feed';
+import * as userAction from '../actions/users';
 import * as fromServices from './PusherService';
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
@@ -26,7 +27,9 @@ export class FeedEffects {
     ofType(feedAction.ADD_ONE),
     mergeMap((action: any) =>  this.pusherService.addPost(action.payload)
         .pipe(
-          map(m => new feedAction.AddOneSuccess(m)),
+          switchMap(m => [
+            new feedAction.AddOneSuccess(m),
+            new userAction.IncCounter(m.authorId)]),
           catchError(() => EMPTY) //todo
         )
     )

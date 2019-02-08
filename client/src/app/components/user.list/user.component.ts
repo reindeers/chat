@@ -20,11 +20,14 @@ export class UserComponent implements OnInit, OnChanges{
 
   }
   ngOnInit(){
-    this.isSelect = this.slctUsr.id == this.user.id;
+    console.log(this.slctUsr +'  ' + this.isSelect)
   }
 
   ngOnChanges(){
+    if (this.slctUsr)
+      this.isSelect = this.slctUsr.id == this.user.id;
 
+    console.log(this.slctUsr +'  ' + this.isSelect)
 
   }
 

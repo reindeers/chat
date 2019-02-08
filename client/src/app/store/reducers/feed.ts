@@ -8,15 +8,15 @@ export interface State {
 export const initialState: State = {
   feed: [
     {
-      id: 1, author: "Вася", status: FeedStatus.ACTIVE, //todo: author - link to id not to string name
+      id: 0, author: "Вася", authorId: 0, status: FeedStatus.ACTIVE,
       content: "Всем привет", createdAt: new Date()
     },
     {
-      id: 2, author: "Петя", status: FeedStatus.ACTIVE,
+      id: 1, author: "Петя", authorId: 1, status: FeedStatus.ACTIVE,
       content: "Всем привет0", createdAt: new Date()
     },
     {
-      id: 3, author: "админ", status: FeedStatus.DELETED,
+      id: 2, author: "админ", authorId: 2, status: FeedStatus.DELETED,
       content: "Всем привет1", createdAt: new Date()
     }
   ]
@@ -40,7 +40,19 @@ export function reducer(state = initialState, action: feedAction.Action) : State
       const editFeed: Feed = action.payload;
       return{
         ...state,
-        feed: [...state.feed, editFeed]
+        feed: state.feed.map(feed => {
+          if (feed.id == editFeed.id) return feed;
+          return feed
+        })
+      };
+    }
+    case feedAction.DELETE_ONE: { //todo
+      const deleteFeed: Feed = action.payload;
+      return{
+        ...state,
+        feed: state.feed.filter(feed => {
+          if (feed.id != deleteFeed.id) return feed;
+        })
       };
     }
     case feedAction.LOAD_FEED_SUCCESS: {

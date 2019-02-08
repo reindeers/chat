@@ -24,9 +24,13 @@ export class UserEffects {
 
   @Effect()
   changeUser$ = this.actions$.pipe(ofType(userAction.SELECT),
-    mergeMap((action : any) => this.pusherService.changeUser(action.payload)
+    switchMap((action : any) => this.pusherService.changeUser(action.payload)
         .pipe(
-          map(user => new userAction.ChangeUserSuccess(user)), //todo select
+          switchMap(user => [
+            new userAction.SelectUserSuccess(user),
+            new userAction.EditLastLogin(user),
+            new userAction.SetNullCounter(user)
+          ]),
           catchError(() => EMPTY)
         )
     ));

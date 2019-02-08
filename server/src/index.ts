@@ -1,3 +1,5 @@
+import {FeedStatus} from "./schema/Feed";
+
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -37,11 +39,12 @@ app.post('/change', (req, res) => {
 app.post('/submit', (req, res) => {
     const {body} = req;
     const {text, name} = body; //todo
+    console.log(body)
     pusher.trigger(['feeds', 'counter'], 'posts', {
         text,
         name,
         createdAt: new Date(),
-        status: 'ACTIVE' //todo
+        status: FeedStatus.ACTIVE
     });
     res
         .status(200)

@@ -23,9 +23,9 @@ export class PusherService {
 
     channel.bind(
       'posts',
-      (data: { id: number, author: string; content: string; createdAt: Date, status: FeedStatus }) => {
+      (data: { id: number, author: string; authorId: number; content: string; createdAt: Date, status: FeedStatus }) => {
         this.subject.next(
-          {id: data.id, author: data.author, content: data.content, createdAt: data.createdAt, status: data.status}
+          {id: data.id, author: data.author, authorId: data.authorId, content: data.content, createdAt: data.createdAt, status: data.status}
         );
       }
     );

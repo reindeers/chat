@@ -7,7 +7,7 @@
     </user-list>
   </mat-card>
   <message-list
-    [feed]="feed$ | async">
+    [feed]="feed$ | async" [user]="selectUser$ | async">
   </message-list>
   <form class="form">
     <mat-form-field class="message">

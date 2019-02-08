@@ -7,5 +7,6 @@ export interface User {
 }
 
 export enum UserGroup {
-  USER, ADMIN
+  USER = "USER",
+  ADMIN = "ADMIN"
 }

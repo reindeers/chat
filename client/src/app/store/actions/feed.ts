@@ -7,6 +7,7 @@ export const EDIT_ONE = '[Feed] Edit One';
 export const LOAD_FEED = '[Feed] Load All';
 export const LOAD_FEED_SUCCESS = '[Feed] Load Feed Success';
 export const LOAD_FEED_FAIL = '[Feed] Load Feed Fail';
+export const DELETE_ONE = '[Feed] Delete One';
 
 export class AddOne implements Action {
   readonly type = ADD_ONE;
@@ -23,6 +24,11 @@ export class EditOne implements Action {
   constructor(public payload: Feed){}
 }
 
+export class DeleteOne implements Action {
+  readonly type = DELETE_ONE;
+  constructor(public payload: Feed){}
+}
+
 export class LoadFeed implements Action {
   readonly type = LOAD_FEED;
   constructor(public payload: any){}
@@ -36,4 +42,4 @@ export class LoadFeedFail implements Action {
   readonly type = LOAD_FEED_FAIL;
   constructor(public payload: ExceptionInformation){}
 }
-export type Action = AddOne | LoadFeed | LoadFeedFail | LoadFeedSuccess | EditOne | AddOneSuccess;
+export type Action = AddOne | LoadFeed | LoadFeedFail | LoadFeedSuccess | EditOne | DeleteOne | AddOneSuccess;

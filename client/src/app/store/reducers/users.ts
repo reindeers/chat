@@ -8,16 +8,16 @@ export interface State {
 }
 
 export const initialState: State = {
-  ids: [1, 2, 3],
+  ids: [0, 1, 2],
   users: {
+    0: {
+      id: 0, name: "Вася", group: UserGroup.USER, counter: 0, lastLogin: new Date()
+    },
     1: {
-      id: 1, name: "Вася", group: UserGroup.USER, counter: 0, lastLogin: new Date()
+      id: 1, name: "Петя", group: UserGroup.USER, counter: 0, lastLogin: new Date()
     },
     2: {
-      id: 2, name: "Петя", group: UserGroup.USER, counter: 0, lastLogin: new Date()
-    },
-    3: {
-      id: 3, name: "админ", group: UserGroup.ADMIN, counter: 0, lastLogin: new Date()
+      id: 2, name: "админ", group: UserGroup.ADMIN, counter: 0, lastLogin: new Date()
     }
   },
   selected: null
@@ -39,18 +39,58 @@ export function reducer(state = initialState, action: userAction.Action) : State
       return {
         ...state,
         users: state.ids.map(id => {
-          console.log(user)
-          console.log(action)
           if (id == user.id) return user;
           return state.users[id]
         })
       }
     }
-    case userAction.SELECT: {
+    case userAction.EDIT_LAST_LOGIN: {
+      const id = action.payload;
+      return {
+        ...state,
+        users: state.ids.map(id0 => {
+          if (id0 == id) {
+            let user = state.users[id];
+            user.lastLogin = new Date();
+            return user
+          };
+          return state.users[id0]
+        })
+      }
+    }
+    case userAction.SELECT_USER_SUCCESS: {
       const id = action.payload;
       return {
         ...state,
         selected: id
+      }
+    }
+    case userAction.SET_NULL_COUNTER: {
+      const id = action.payload;
+      return {
+        ...state,
+        users: state.ids.map(id0 => {
+          if (id0 == id) {
+            let user = state.users[id];
+            user.counter = 0;
+            return user
+          };
+          return state.users[id0]
+        })
+      }
+    }
+    case userAction.INC_COUNTER: {
+      const id = action.payload;
+      return {
+        ...state,
+        users: state.ids.map(id0 => {
+          if (id0 != id) {
+            let user = state.users[id0];
+            user.counter++;
+            return user
+          };
+          return state.users[id0]
+        })
       }
     }
     default: return state;
