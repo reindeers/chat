@@ -10,6 +10,7 @@ export const LOAD_USERS = '[Users] Load All';
 export const SELECT_USER_SUCCESS = '[Users] Select User Success';
 export const SET_NULL_COUNTER = '[Users] Set Null Counter';
 export const INC_COUNTER = '[Users] Inc Counter';
+export const DEC_COUNTER = '[Users] Dec Counter';
 
 export class Select implements Action {
   readonly type = SELECT;
@@ -48,4 +49,9 @@ export class IncCounter implements Action {
   readonly type = INC_COUNTER;
   constructor(public payload: number){}
 }
-export type Action = AddOne | Select | LoadUsers | SelectUserSuccess | EditOne | EditLastLogin | SetNullCounter | IncCounter;
+
+export class DecCounter implements Action {
+  readonly type = DEC_COUNTER;
+  constructor(public payload: number){}
+}
+export type Action = AddOne | Select | LoadUsers | SelectUserSuccess | EditOne | EditLastLogin | SetNullCounter | IncCounter | DecCounter;

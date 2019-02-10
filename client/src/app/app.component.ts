@@ -40,12 +40,19 @@ export class AppComponent implements OnInit {
 
   }
 
-  onSelect(id: number){
+  select(id: number){
     this.store.dispatch(new userAction.Select(id));
+  }
 
-   /* let usr = Object.assign({}, this.user);
-    usr.lastLogin = new Date();
-    this.store.dispatch(new userAction.EditOne(usr))*/
+  edit(msg: Feed) {
+    this.store.dispatch(new feedAction.EditOne(msg))
+  }
+
+  delete(id: number) {
+    this.store.dispatch(new feedAction.DeleteOne(id))
+  }
+  recover(id: number) {
+    this.store.dispatch(new feedAction.RecoverOne(id))
   }
 
   add(){

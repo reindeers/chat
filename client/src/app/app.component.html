@@ -3,11 +3,14 @@
     <user-list
       [users]="users$ | async"
       [slctUsr]="selectUser$ | async"
-      (select)="onSelect($event)">
+      (select)="select($event)">
     </user-list>
   </mat-card>
   <message-list
-    [feed]="feed$ | async" [user]="selectUser$ | async">
+    [feed]="feed$ | async" [user]="selectUser$ | async"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (recover)="recover($event)">
   </message-list>
   <form class="form">
     <mat-form-field class="message">

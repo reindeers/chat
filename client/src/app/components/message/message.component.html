@@ -1,12 +1,19 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>{{msg.author}}</mat-card-title>
+    <mat-card-subtitle *ngIf="msg.status == 'DELETED'">сообщение удалено</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>{{msg.content}}</p>
+    <p *ngIf="!editMode">{{msg.content}}</p>
+    <input matInput *ngIf="editMode" #message maxlength="256" placeholder="Message" [(ngModel)]="msg.content"
+           name="text">
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button color="primary" *ngIf="isDeleteMsg()">удалить</button>
-    <button mat-button color="primary" *ngIf="isEditableMsg()">редактировать</button>
+    <button mat-button color="primary" *ngIf="msg.status == 'DELETED'" (click)="recover.emit(msg)">восстановить</button>
+    <button mat-button color="primary" *ngIf="isDeleteMsg() && msg.status != 'DELETED'" (click)="delete.emit(msg)">удалить</button>
+    <button mat-button color="primary" *ngIf="isEditableMsg() && !editMode" (click)="toggleMode(true)">редактировать
+    </button>
+    <button mat-button color="primary" *ngIf="isEditableMsg() && editMode" (click)="toggleMode(false)">сохранить
+    </button>
   </mat-card-actions>
 </mat-card>

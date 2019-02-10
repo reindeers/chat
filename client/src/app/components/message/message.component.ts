@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Feed} from "../../model/Feed";
 import {User} from "../../model/User";
 
@@ -10,7 +10,12 @@ import {User} from "../../model/User";
 export class MessageComponent {
   @Input() msg: Feed;
   @Input() user: User;
+  @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
+  @Output() recover = new EventEmitter();
+
   credentials = {};
+  editMode: boolean = false;
 
   constructor(){
     this.credentials = {
@@ -29,6 +34,11 @@ export class MessageComponent {
 
   isDeleteMsg(){
     return this.credentials["delete_msg"].indexOf(this.user.group) != -1;
+  }
+
+  toggleMode(isEdit: boolean){
+    this.editMode = isEdit;
+    if (!isEdit) this.edit.emit(this.msg)
   }
 
 }

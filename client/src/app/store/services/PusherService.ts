@@ -67,4 +67,18 @@ export class PusherService {
     this.http.post('http://localhost:3000/submit', msg);
     return of(msg)
   }
+
+  deletePost(msg: Feed) : Observable<Feed> {
+    this.http.post('http://localhost:3000/delete', msg.id);
+    return of(msg)
+  }
+  recoverPost(msg: Feed) : Observable<Feed>{
+    this.http.post('http://localhost:3000/recover', msg.id);
+    return of(msg)
+  }
+
+  editPost(msg: Feed): Observable<Feed>{
+    this.http.post('http://localhost:3000/edit', msg)
+    return of(msg)
+  }
 }

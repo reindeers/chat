@@ -7,6 +7,6 @@ export interface Feed {
   status: FeedStatus
 }
 
-export enum FeedStatus{
-  ACTIVE, DELETED
+export enum FeedStatus {
+  ACTIVE = "ACTIVE", DELETED = "DELETED"
 }

@@ -16,15 +16,19 @@ import {User} from "../../model/User";
 export class MessageListComponent implements OnInit, OnChanges {
   @Input() feed: Feed[];
   @Input() user: User;
+  @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
+  @Output() recover = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
     console.log('init')
     //  this.store.dispatch(new userAction.LoadUsers()); //todo unsubscribe
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log('changes')
   }
 
