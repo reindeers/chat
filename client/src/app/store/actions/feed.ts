@@ -30,12 +30,12 @@ export class EditOne implements Action {
 
 export class DeleteOne implements Action {
   readonly type = DELETE_ONE;
-  constructor(public payload: any){}
+  constructor(public payload: number){}
 }
 
 export class EditOneSuccess implements Action {
   readonly type = EDIT_ONE_SUCCESS;
-  constructor(public payload: Feed){}
+  constructor(public payload: any){}
 }
 
 export class DeleteOneSuccess implements Action {
@@ -45,16 +45,16 @@ export class DeleteOneSuccess implements Action {
 
 export class RecoverOne implements Action {
   readonly type = RECOVER_ONE;
-  constructor(public payload: any)
+  constructor(public payload: number){}
 }
 export class RecoverOneSuccess implements Action {
   readonly type = RECOVER_ONE_SUCCESS;
-  constructor(public payload: number)
+  constructor(public payload: any){}
 }
 
 export class LoadFeed implements Action {
   readonly type = LOAD_FEED;
-  constructor(public payload: any){}
+  constructor(public payload: Feed){}
 }
 export class LoadFeedSuccess implements Action {
   readonly type = LOAD_FEED_SUCCESS;

@@ -1,4 +1,5 @@
-import {FeedStatus} from "./schema/Feed";
+import {Feed, FeedStatus} from "./schema/Feed";
+import {User} from "./schema/User";
 
 const express = require('express');
 const app = express();
@@ -26,27 +27,67 @@ app.get('/', function (req, res) {
 });
 
 app.post('/change', (req, res) => {
-    const userId = req.body.id;
-    const data = {
-        userId
-    };
-    pusher.trigger('counter', 'user', data);
+    const user = req.body;
+    try {
+        pusher.trigger('counter', 'user', user);
+    } catch (e) {
+    }
     res
         .status(200)
         .send({message: 'User was select', status: true});
 });
 
 app.post('/submit', (req, res) => {
-    const {body} = req;
-    const {text, name} = body; //todo
-    console.log(body)
-    pusher.trigger(['feeds', 'counter'], 'posts', {
-        text,
-        name,
-        createdAt: new Date(),
-        status: FeedStatus.ACTIVE
-    });
+    const msg: Feed = req.body.msg;
+    const usr: User[] = req.body.usr;
+    try {
+        pusher.trigger('feeds', 'posts', msg);
+        for (var i = 0; i < usr.length; i++){
+            pusher.trigger('counter', 'inc', usr[i]);
+        }
+
+    } catch (e) {
+    }
+
     res
         .status(200)
         .send({message: 'Post was successfully created', status: true});
+});
+app.post('/edit', (req, res) => {
+    const msg: Feed = req.body.msg;
+    try {
+        pusher.trigger('feeds', 'posts', msg);
+    } catch (e) {
+    }
+
+    res
+        .status(200)
+        .send({message: 'Post was successfully edit', status: true});
+});
+app.post('/delete', (req, res) => {
+    const msg: Feed = req.body.msg;
+    const usr: User[] = req.body.usr;
+    try {
+        pusher.trigger('feeds', 'posts', msg);
+        for (var i = 0; i < usr.length; i++) {
+            pusher.trigger('counter', 'dec', usr[i]);
+        }
+
+    } catch (e) {
+    }
+
+    res
+        .status(200)
+        .send({message: 'Post was successfully deleted', status: true});
+});
+app.post('/recover', (req, res) => {
+    const msg: Feed = req.body.msg;
+    try {
+        pusher.trigger('feeds', 'posts', msg);
+    } catch (e) {
+    }
+
+    res
+        .status(200)
+        .send({message: 'Post was successfully recover', status: true});
 });

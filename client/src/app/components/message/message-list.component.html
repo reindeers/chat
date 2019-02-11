@@ -1,10 +1,11 @@
 <div name="feedItem" aria-label="feed items">
-  <span *ngFor="let msg of feed">{{msg}}</span>
-  <message-item *ngFor="let msg of feed"
-                *ngIf="msg.status == 'ACTIVE' || user.group == 'ADMIN'"
-                [msg]="msg" [user]="user"
-                (delete)="delete.emit($event)"
-                (edit)="edit.emit($event)"
-                (recover)="recover.emit($event)">>
-  </message-item>
+  <div *ngFor="let msg of feed">
+    <message-item *ngIf="msg.status == 'ACTIVE' || user.group == 'ADMIN'"
+                  [msg]="msg" [user]="user"
+                  (delete)="delete.emit($event)"
+                  (edit)="edit.emit($event)"
+                  (recover)="recover.emit($event)">>
+    </message-item>
+  </div>
+
 </div>

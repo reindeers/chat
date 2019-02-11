@@ -1,5 +1,7 @@
 import {User, UserGroup} from "../../model/User";
 import * as userAction from '../actions/users';
+import * as feedAction from "../actions/feed";
+import {Feed} from "../../model/Feed";
 
 export interface State {
   ids: number[];
@@ -59,10 +61,25 @@ export function reducer(state = initialState, action: userAction.Action) : State
       }
     }
     case userAction.SELECT_USER_SUCCESS: {
-      const id = action.payload;
+      const user = action.payload;
+     /* return {
+        ...state,
+        users: state.ids.map(id0 => {
+          if (id0 == user.id) {
+            return user
+          };
+          return state.users[id0]
+        }),
+        selected: user.id
+      }*/
       return {
         ...state,
-        selected: id
+        selected: user.id
+      }
+    }
+    case userAction.SELECT: {
+      return {
+        ...state
       }
     }
     case userAction.SET_NULL_COUNTER: {
@@ -106,6 +123,19 @@ export function reducer(state = initialState, action: userAction.Action) : State
           return state.users[id0]
         })
       }
+    }
+    case userAction.LOAD_USERS_SUCCESS: {
+      const user: User = action.payload;
+      return{
+        ...state,
+        users: state.ids.filter(id => id == user.id).length > 0
+          ? state.ids.map(id => {
+            if (id == user.id) return user;
+            else return state.users[id];
+          })
+          : {...state.users, [user.id]: user}
+      }
+
     }
     default: return state;
   }

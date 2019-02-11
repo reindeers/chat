@@ -11,25 +11,23 @@ export class UserEffects {
               private pusherService: fromServices.PusherService) {
   }
 
-  /*@Effect()
+  @Effect()
   loadUsers$ = this.actions$.pipe(ofType(userAction.LOAD_USERS),
-    switchMap(() => {
+    switchMap((action: any) => {
       return this.pusherService.getUserItems()
         .pipe(
           map(users => new userAction.LoadUsersSuccess(users)),
-          catchError(error => of(new userAction.LoadUsersFail(error)))
+          catchError(() => EMPTY) //todo
         )
     })
-  );*/
+  );
 
   @Effect()
   changeUser$ = this.actions$.pipe(ofType(userAction.SELECT),
     switchMap((action : any) => this.pusherService.changeUser(action.payload)
         .pipe(
           switchMap(user => [
-            new userAction.SelectUserSuccess(user),
-            new userAction.EditLastLogin(user),
-            new userAction.SetNullCounter(user)
+            new userAction.SelectUserSuccess(user)
           ]),
           catchError(() => EMPTY)
         )

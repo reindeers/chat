@@ -27,8 +27,7 @@ export function reducer(state = initialState, action: feedAction.Action) : State
     case feedAction.ADD_ONE: {
       const newFeed: Feed = action.payload;
       return{
-        ...state,
-        feed: [...state.feed, newFeed]
+        ...state
       };
     }
     case feedAction.ADD_ONE_SUCCESS: {
@@ -36,7 +35,7 @@ export function reducer(state = initialState, action: feedAction.Action) : State
         ...state
       };
     }
-    case feedAction.EDIT_ONE_SUCCESS: {
+    case feedAction.EDIT_ONE: {
       const editFeed: Feed = action.payload;
       return{
         ...state,
@@ -46,38 +45,60 @@ export function reducer(state = initialState, action: feedAction.Action) : State
         })
       };
     }
-    case feedAction.DELETE_ONE_SUCCESS: {
+    case feedAction.EDIT_ONE_SUCCESS: {
+      return{
+        ...state
+      };
+    }
+    case feedAction.DELETE_ONE: {
       const id: number = action.payload;
       return{
         ...state,
         feed: state.feed.filter(feed => {
           if (feed.id != id) return feed;
+          else {
+            let f = feed;
+            f.status = FeedStatus.DELETED;
+            return f;
+          }
         })
       };
     }
-    case feedAction.RECOVER_ONE_SUCCESS: {
+    case feedAction.DELETE_ONE_SUCCESS: {
+      return{
+        ...state
+      };
+    }
+    case feedAction.RECOVER_ONE: {
       const id: number = action.payload;
       return {
         ...state,
         feed: state.feed.map(feed => {
           if (feed.id == id) {
             let f = feed;
-            f.status == FeedStatus.ACTIVE;
+            f.status = FeedStatus.ACTIVE;
             return f;
-          } return feed;
+          }
+          else return feed;
         })
       }
     }
+    case feedAction.RECOVER_ONE_SUCCESS: {
+      return{
+        ...state
+      };
+    }
     case feedAction.LOAD_FEED_SUCCESS: {
-      /*const feed: Feed[] = action.payload;
-      return{
-        ...state,
-        feed: {...feed.map(u => u.id), feed}
-      };*/
       const feed: Feed = action.payload;
+
       return{
         ...state,
-        feed: [...state.feed, feed]
+        feed: state.feed.filter(x => x.id == feed.id).length > 0
+          ? state.feed.map(f => {
+            if (f.id == feed.id) return feed;
+            else return f;
+          })
+          : [...state.feed, feed]
       }
 
     }
