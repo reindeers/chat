@@ -110,4 +110,30 @@ export class PusherService {
     this.http.post('http://localhost:3000/edit', {msg: msg}).subscribe();
     return of(msg)
   }
+
+  decCounter(usr: User): Observable<User> {
+    let usrs = this.users.map(u => {
+      if (u.id != usr.id) {
+        let us = u;
+        us.counter--;
+        return us;
+      }
+      else return u
+    });
+    this.http.post('http://localhost:3000/dcounter', {usr: usrs}).subscribe();
+    return of(usr)
+  }
+
+  incCounter(usr: User): Observable<User> {
+    let usrs = this.users.map(u => {
+      if (u.id != usr.id) {
+        let us = u;
+        us.counter++;
+        return us;
+      }
+      else return u
+    });
+    this.http.post('http://localhost:3000/icounter', {usr: usrs}).subscribe();
+    return of(usr)
+  }
 }

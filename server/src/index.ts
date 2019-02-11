@@ -37,15 +37,35 @@ app.post('/change', (req, res) => {
         .send({message: 'User was select', status: true});
 });
 
-app.post('/submit', (req, res) => {
-    const msg: Feed = req.body.msg;
+app.post('/dcounter', (req, res) => {
     const usr: User[] = req.body.usr;
     try {
-        pusher.trigger('feeds', 'posts', msg);
+        for (var i = 0; i < usr.length; i++){
+            pusher.trigger('counter', 'dec', usr[i]);
+        }
+    } catch (e) {
+    }
+    res
+        .status(200)
+        .send({message: 'Counter --', status: true});
+});
+app.post('/icounter', (req, res) => {
+    const usr: User[] = req.body.usr;
+    try {
         for (var i = 0; i < usr.length; i++){
             pusher.trigger('counter', 'inc', usr[i]);
         }
+    } catch (e) {
+    }
+    res
+        .status(200)
+        .send({message: 'Counter ++', status: true});
+});
 
+app.post('/submit', (req, res) => {
+    const msg: Feed = req.body.msg;
+    try {
+        pusher.trigger('feeds', 'posts', msg);
     } catch (e) {
     }
 
@@ -66,12 +86,8 @@ app.post('/edit', (req, res) => {
 });
 app.post('/delete', (req, res) => {
     const msg: Feed = req.body.msg;
-    const usr: User[] = req.body.usr;
     try {
         pusher.trigger('feeds', 'posts', msg);
-        for (var i = 0; i < usr.length; i++) {
-            pusher.trigger('counter', 'dec', usr[i]);
-        }
 
     } catch (e) {
     }

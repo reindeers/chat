@@ -51,11 +51,11 @@ export function reducer(state = initialState, action: feedAction.Action) : State
       };
     }
     case feedAction.DELETE_ONE: {
-      const id: number = action.payload;
+      const feed: Feed = action.payload;
       return{
         ...state,
         feed: state.feed.filter(feed => {
-          if (feed.id != id) return feed;
+          if (feed.id != feed.id) return feed;
           else {
             let f = feed;
             f.status = FeedStatus.DELETED;
@@ -70,11 +70,11 @@ export function reducer(state = initialState, action: feedAction.Action) : State
       };
     }
     case feedAction.RECOVER_ONE: {
-      const id: number = action.payload;
+      const feed: Feed = action.payload;
       return {
         ...state,
         feed: state.feed.map(feed => {
-          if (feed.id == id) {
+          if (feed.id == feed.id) {
             let f = feed;
             f.status = FeedStatus.ACTIVE;
             return f;

@@ -28,8 +28,7 @@ export class FeedEffects {
     mergeMap((action: any) => this.pusherService.addPost(action.payload)
       .pipe(
         switchMap(m => [
-          new feedAction.AddOneSuccess(m),
-          new userAction.IncCounter(m.authorId)]),
+          new feedAction.AddOneSuccess(m)]),
         catchError(() => EMPTY) //todo
       )
     )
@@ -53,8 +52,7 @@ export class FeedEffects {
     mergeMap((action: any) => this.pusherService.deletePost(action.payload)
       .pipe(
         switchMap(m => [
-          new feedAction.DeleteOneSuccess(m.id),
-          new userAction.DecCounter(m.authorId)]),
+          new feedAction.DeleteOneSuccess(m.id)]),
         catchError(() => EMPTY)
       )
     )

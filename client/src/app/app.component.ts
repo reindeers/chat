@@ -55,11 +55,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(new feedAction.EditOne(msg))
   }
 
-  delete(id: number) {
-    this.store.dispatch(new feedAction.DeleteOne(id))
+  delete(msg: Feed) {
+    this.store.dispatch(new feedAction.DeleteOne(msg));
+    this.store.dispatch(new userAction.DecCounter(msg.authorId))
   }
-  recover(id: number) {
-    this.store.dispatch(new feedAction.RecoverOne(id))
+
+  recover(msg: Feed) {
+    this.store.dispatch(new feedAction.RecoverOne(msg));
+    this.store.dispatch(new userAction.IncCounter(msg.authorId))
   }
 
   add(){

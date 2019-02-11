@@ -4,6 +4,7 @@ import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap, switchMap} from "rxjs/internal/operators";
 import {EMPTY, of} from "rxjs/index";
+import * as feedAction from "../actions/feed";
 
 @Injectable()
 export class UserEffects {
@@ -32,4 +33,28 @@ export class UserEffects {
           catchError(() => EMPTY)
         )
     ));
+
+  @Effect()
+  decCounter = this.actions$.pipe(
+    ofType(userAction.DEC_COUNTER),
+    mergeMap((action: any) => this.pusherService.decCounter(action.payload)
+      .pipe(
+        switchMap(m => [
+          new userAction.DecCounter(null)]),
+        catchError(() => EMPTY)
+      )
+    )
+  )
+
+  @Effect()
+  incCounter = this.actions$.pipe(
+    ofType(userAction.INC_COUNTER),
+    mergeMap((action: any) => this.pusherService.incCounter(action.payload)
+      .pipe(
+        switchMap(m => [
+          new userAction.IncCounter(null)]),
+        catchError(() => EMPTY)
+      )
+    )
+  )
 }

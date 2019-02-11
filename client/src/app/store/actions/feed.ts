@@ -30,7 +30,7 @@ export class EditOne implements Action {
 
 export class DeleteOne implements Action {
   readonly type = DELETE_ONE;
-  constructor(public payload: number){}
+  constructor(public payload: Feed){}
 }
 
 export class EditOneSuccess implements Action {
@@ -45,7 +45,7 @@ export class DeleteOneSuccess implements Action {
 
 export class RecoverOne implements Action {
   readonly type = RECOVER_ONE;
-  constructor(public payload: number){}
+  constructor(public payload: Feed){}
 }
 export class RecoverOneSuccess implements Action {
   readonly type = RECOVER_ONE_SUCCESS;

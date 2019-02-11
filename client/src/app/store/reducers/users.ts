@@ -62,16 +62,6 @@ export function reducer(state = initialState, action: userAction.Action) : State
     }
     case userAction.SELECT_USER_SUCCESS: {
       const user = action.payload;
-     /* return {
-        ...state,
-        users: state.ids.map(id0 => {
-          if (id0 == user.id) {
-            return user
-          };
-          return state.users[id0]
-        }),
-        selected: user.id
-      }*/
       return {
         ...state,
         selected: user.id
@@ -80,20 +70,6 @@ export function reducer(state = initialState, action: userAction.Action) : State
     case userAction.SELECT: {
       return {
         ...state
-      }
-    }
-    case userAction.SET_NULL_COUNTER: {
-      const id = action.payload;
-      return {
-        ...state,
-        users: state.ids.map(id0 => {
-          if (id0 == id) {
-            let user = state.users[id];
-            user.counter = 0;
-            return user
-          };
-          return state.users[id0]
-        })
       }
     }
     case userAction.INC_COUNTER: {

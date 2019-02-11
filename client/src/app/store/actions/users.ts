@@ -52,11 +52,11 @@ export class SetNullCounter implements Action {
 }
 export class IncCounter implements Action {
   readonly type = INC_COUNTER;
-  constructor(public payload: number){}
+  constructor(public payload: any){}
 }
 
 export class DecCounter implements Action {
   readonly type = DEC_COUNTER;
-  constructor(public payload: number){}
+  constructor(public payload: any){}
 }
 export type Action = AddOne | Select | LoadUsers | LoadUsersSuccess | SelectUserSuccess | EditOne | EditLastLogin | SetNullCounter | IncCounter | DecCounter;
