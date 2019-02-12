@@ -38,11 +38,7 @@ export function reducer(state = initialState, action: feedAction.Action) : State
     case feedAction.EDIT_ONE: {
       const editFeed: Feed = action.payload;
       return{
-        ...state,
-        feed: state.feed.map(feed => {
-          if (feed.id == editFeed.id) return feed;
-          return feed
-        })
+        ...state
       };
     }
     case feedAction.EDIT_ONE_SUCCESS: {
@@ -51,17 +47,8 @@ export function reducer(state = initialState, action: feedAction.Action) : State
       };
     }
     case feedAction.DELETE_ONE: {
-      const feed: Feed = action.payload;
       return{
-        ...state,
-        feed: state.feed.filter(feed => {
-          if (feed.id != feed.id) return feed;
-          else {
-            let f = feed;
-            f.status = FeedStatus.DELETED;
-            return f;
-          }
-        })
+        ...state
       };
     }
     case feedAction.DELETE_ONE_SUCCESS: {
@@ -72,15 +59,7 @@ export function reducer(state = initialState, action: feedAction.Action) : State
     case feedAction.RECOVER_ONE: {
       const feed: Feed = action.payload;
       return {
-        ...state,
-        feed: state.feed.map(feed => {
-          if (feed.id == feed.id) {
-            let f = feed;
-            f.status = FeedStatus.ACTIVE;
-            return f;
-          }
-          else return feed;
-        })
+        ...state
       }
     }
     case feedAction.RECOVER_ONE_SUCCESS: {

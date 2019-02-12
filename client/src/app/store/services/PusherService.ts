@@ -72,15 +72,13 @@ export class PusherService {
   }
 
   addPost(msg: Feed): Observable<Feed> {
-    let u = this.users.filter(xx => xx.id != msg.authorId);
-    this.http.post('http://localhost:3000/submit', {msg: msg, usr: u}).subscribe();
+    this.http.post('http://localhost:3000/submit', {msg: msg}).subscribe();
     return of(msg)
   }
 
   deletePost(msg: Feed): Observable<Feed> {
     msg.status = FeedStatus.DELETED;
-    let u = this.users.filter(xx => xx.id != msg.authorId);
-    this.http.post('http://localhost:3000/delete', {msg: msg, usr: u}).subscribe();
+    this.http.post('http://localhost:3000/delete', {msg: msg}).subscribe();
     return of(msg)
   }
 
