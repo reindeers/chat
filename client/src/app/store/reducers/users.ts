@@ -1,7 +1,5 @@
 import {User, UserGroup} from "../../model/User";
 import * as userAction from '../actions/users';
-import * as feedAction from "../actions/feed";
-import {Feed} from "../../model/Feed";
 
 export interface State {
   ids: number[];
@@ -22,44 +20,12 @@ export const initialState: State = {
       id: 2, name: "админ", group: UserGroup.ADMIN, counter: 0, lastLogin: new Date()
     }
   },
-  selected: null
+  selected: 0
 
 };
 
 export function reducer(state = initialState, action: userAction.Action) : State{
   switch(action.type){
-    case userAction.ADD_ONE: {
-      const newUser: User = action.payload;
-      return{
-        ...state,
-        ids: [...state.ids, newUser.id],
-        users: {...state.users, [newUser.id]: newUser}
-      };
-    }
-    case userAction.EDIT_ONE: {
-      const user = action.payload;
-      return {
-        ...state,
-        users: state.ids.map(id => {
-          if (id == user.id) return user;
-          return state.users[id]
-        })
-      }
-    }
-    case userAction.EDIT_LAST_LOGIN: {
-      const id = action.payload;
-      return {
-        ...state,
-        users: state.ids.map(id0 => {
-          if (id0 == id) {
-            let user = state.users[id];
-            user.lastLogin = new Date();
-            return user
-          };
-          return state.users[id0]
-        })
-      }
-    }
     case userAction.SELECT_USER_SUCCESS: {
       const user = action.payload;
       return {
@@ -67,26 +33,10 @@ export function reducer(state = initialState, action: userAction.Action) : State
         selected: user.id
       }
     }
-    case userAction.SELECT: {
-      return {
-        ...state
-      }
-    }
-    case userAction.INC_COUNTER: {
-      return {
-        ...state
-      }
-    }
-    case userAction.DEC_COUNTER: {
-      return {
-        ...state
-      }
-    }
-    case userAction.INC_COUNTER_SUCCESS: {
-      return {
-        ...state
-      }
-    }
+    case userAction.SELECT:
+    case userAction.INC_COUNTER:
+    case userAction.DEC_COUNTER:
+    case userAction.INC_COUNTER_SUCCESS:
     case userAction.DEC_COUNTER_SUCCESS: {
       return {
         ...state

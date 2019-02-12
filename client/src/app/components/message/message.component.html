@@ -10,7 +10,9 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button color="primary" *ngIf="msg.status == 'DELETED'" (click)="recover.emit(msg)">восстановить</button>
-    <button mat-button color="primary" *ngIf="isDeleteMsg() && msg.status != 'DELETED'" (click)="delete.emit(msg)">удалить</button>
+    <button mat-button color="primary" *ngIf="isDeleteMsg() && msg.status != 'DELETED'" (click)="delete.emit(msg)">
+      удалить
+    </button>
     <button mat-button color="primary" *ngIf="isEditableMsg() && !editMode" (click)="toggleMode(true)">редактировать
     </button>
     <button mat-button color="primary" *ngIf="isEditableMsg() && editMode" (click)="toggleMode(false)">сохранить

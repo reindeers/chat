@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
+import {Injectable, OnDestroy} from '@angular/core';
+import {Observable, of, Subject, Subscription} from 'rxjs';
 import Pusher from 'pusher-js';
 import {Feed, FeedStatus} from "../../model/Feed";
 import {User, UserGroup} from "../../model/User";
@@ -8,11 +8,13 @@ import * as fromRoot from "../reducers";
 import {Store} from "@ngrx/store";
 
 @Injectable()
-export class PusherService {
+export class PusherService implements OnDestroy {
   private subject: Subject<Feed> = new Subject<Feed>();
   private subjectUser: Subject<User> = new Subject<User>();
   users$: Observable<User[]>;
   users: User[];
+  channel: Pusher;
+  channelUser: Pusher;
 
   constructor(private http: HttpClient, private store: Store<fromRoot.State>) {
     this.users$ = store.select(fromRoot.getAllUsers);
@@ -24,12 +26,10 @@ export class PusherService {
       forceTLS: true
     });
 
-    let channel = pusher.subscribe('feeds');
-    let channelUser = pusher.subscribe('counter');
+    this.channel = pusher.subscribe('feeds');
+    this.channelUser = pusher.subscribe('counter');
 
-
-
-    channel.bind(
+    this.channel.bind(
       'posts',
       (data: { id: number, author: string; authorId: number; content: string; createdAt: Date, status: FeedStatus }) => {
         this.subject.next(
@@ -45,7 +45,7 @@ export class PusherService {
       }
     );
 
-    channelUser.bind(
+    this.channelUser.bind(
       'count',
       (data: User[]) => {
         for (let us of data)
@@ -54,6 +54,13 @@ export class PusherService {
           )
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.channel.unsubscribe();
+    this.channelUser.unsubscribe();
+    this.subject.unsubscribe();
+    this.subjectUser.unsubscribe();
   }
 
   getFeedItems(): Observable<Feed> {
@@ -78,18 +85,18 @@ export class PusherService {
 
   deletePost(msg: Feed): Observable<Feed> {
     msg.status = FeedStatus.DELETED;
-    this.http.post('http://localhost:3000/delete', {msg: msg}).subscribe();
+    this.http.post('http://localhost:3000/submit', {msg: msg}).subscribe();
     return of(msg)
   }
 
   recoverPost(msg: Feed): Observable<Feed> {
     msg.status = FeedStatus.ACTIVE;
-    this.http.post('http://localhost:3000/recover', {msg: msg}).subscribe();
+    this.http.post('http://localhost:3000/submit', {msg: msg}).subscribe();
     return of(msg)
   }
 
   editPost(msg: Feed): Observable<Feed> {
-    this.http.post('http://localhost:3000/edit', {msg: msg}).subscribe();
+    this.http.post('http://localhost:3000/submit', {msg: msg}).subscribe();
     return of(msg)
   }
 
@@ -102,7 +109,7 @@ export class PusherService {
       }
       else return u
     });
-    this.http.post('http://localhost:3000/dcounter', {usr: usrs}).subscribe();
+    this.http.post('http://localhost:3000/counter', {usr: usrs}).subscribe();
     return of(usrs[id])
   }
 
@@ -115,7 +122,7 @@ export class PusherService {
       }
       else return u
     });
-    this.http.post('http://localhost:3000/icounter', {usr: usrs}).subscribe();
+    this.http.post('http://localhost:3000/counter', {usr: usrs}).subscribe();
     return of(usrs[id])
   }
 }

@@ -37,7 +37,7 @@ app.post('/change', (req, res) => {
         .send({message: 'User was select', status: true});
 });
 
-app.post('/dcounter', (req, res) => {
+app.post('/counter', (req, res) => {
     const usr: User[] = req.body.usr;
     try {
         pusher.trigger('counter', 'count', usr);
@@ -45,17 +45,7 @@ app.post('/dcounter', (req, res) => {
     }
     res
         .status(200)
-        .send({message: 'Counter --', status: true});
-});
-app.post('/icounter', (req, res) => {
-    const usr: User[] = req.body.usr;
-    try {
-        pusher.trigger('counter', 'count', usr);
-    } catch (e) {
-    }
-    res
-        .status(200)
-        .send({message: 'Counter ++', status: true});
+        .send({message: 'counter change', status: true});
 });
 
 app.post('/submit', (req, res) => {
@@ -67,39 +57,5 @@ app.post('/submit', (req, res) => {
 
     res
         .status(200)
-        .send({message: 'Post was successfully created', status: true});
-});
-app.post('/edit', (req, res) => {
-    const msg: Feed = req.body.msg;
-    try {
-        pusher.trigger('feeds', 'posts', msg);
-    } catch (e) {
-    }
-
-    res
-        .status(200)
-        .send({message: 'Post was successfully edit', status: true});
-});
-app.post('/delete', (req, res) => {
-    const msg: Feed = req.body.msg;
-    try {
-        pusher.trigger('feeds', 'posts', msg);
-
-    } catch (e) {
-    }
-
-    res
-        .status(200)
-        .send({message: 'Post was successfully deleted', status: true});
-});
-app.post('/recover', (req, res) => {
-    const msg: Feed = req.body.msg;
-    try {
-        pusher.trigger('feeds', 'posts', msg);
-    } catch (e) {
-    }
-
-    res
-        .status(200)
-        .send({message: 'Post was successfully recover', status: true});
+        .send({message: 'Post was submit', status: true});
 });

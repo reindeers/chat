@@ -1,10 +1,10 @@
 import * as feedAction from '../actions/feed';
-import * as userAction from '../actions/users';
-import * as fromServices from './PusherService';
+import * as fromServices from './pusher.service';
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap, switchMap, takeUntil, tap} from "rxjs/internal/operators";
 import {EMPTY, of} from "rxjs/index";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable()
 export class FeedEffects {
@@ -18,7 +18,7 @@ export class FeedEffects {
       return this.pusherService.getFeedItems()
         .pipe(
           map(m => new feedAction.LoadFeedSuccess(m)),
-          catchError(() => EMPTY) //todo
+          catchError((error: HttpErrorResponse) => of(new feedAction.LoadFeedError(error)))
         )
     }));
 
@@ -27,9 +27,8 @@ export class FeedEffects {
     ofType(feedAction.ADD_ONE),
     mergeMap((action: any) => this.pusherService.addPost(action.payload)
       .pipe(
-        switchMap(m => [
-          new feedAction.AddOneSuccess(m)]),
-        catchError(() => EMPTY) //todo
+        map(m => new feedAction.AddOneSuccess(m)),
+        catchError((error: HttpErrorResponse) => of(new feedAction.AddOneError(error)))
       )
     )
   )
@@ -41,7 +40,7 @@ export class FeedEffects {
       .pipe(
         switchMap(m => [
           new feedAction.EditOneSuccess(m)]),
-        catchError(() => EMPTY)
+        catchError((error: HttpErrorResponse) => of(new feedAction.EditOneError(error)))
       )
     )
   );
@@ -53,7 +52,7 @@ export class FeedEffects {
       .pipe(
         switchMap(m => [
           new feedAction.DeleteOneSuccess(m.id)]),
-        catchError(() => EMPTY)
+        catchError((error: HttpErrorResponse) => of(new feedAction.DeleteOneError(error)))
       )
     )
   )
@@ -64,7 +63,7 @@ export class FeedEffects {
       .pipe(
         switchMap(m => [
           new feedAction.RecoverOneSuccess(m.id)]),
-        catchError(() => EMPTY)
+        catchError((error: HttpErrorResponse) => of(new feedAction.RecoverOneError(error)))
       )
     )
   )

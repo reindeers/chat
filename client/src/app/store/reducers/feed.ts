@@ -24,44 +24,13 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: feedAction.Action) : State{
   switch(action.type){
-    case feedAction.ADD_ONE: {
-      const newFeed: Feed = action.payload;
-      return{
-        ...state
-      };
-    }
-    case feedAction.ADD_ONE_SUCCESS: {
-      return{
-        ...state
-      };
-    }
-    case feedAction.EDIT_ONE: {
-      const editFeed: Feed = action.payload;
-      return{
-        ...state
-      };
-    }
-    case feedAction.EDIT_ONE_SUCCESS: {
-      return{
-        ...state
-      };
-    }
-    case feedAction.DELETE_ONE: {
-      return{
-        ...state
-      };
-    }
-    case feedAction.DELETE_ONE_SUCCESS: {
-      return{
-        ...state
-      };
-    }
-    case feedAction.RECOVER_ONE: {
-      const feed: Feed = action.payload;
-      return {
-        ...state
-      }
-    }
+    case feedAction.ADD_ONE:
+    case feedAction.ADD_ONE_SUCCESS:
+    case feedAction.EDIT_ONE:
+    case feedAction.EDIT_ONE_SUCCESS:
+    case feedAction.DELETE_ONE:
+    case feedAction.DELETE_ONE_SUCCESS:
+    case feedAction.RECOVER_ONE:
     case feedAction.RECOVER_ONE_SUCCESS: {
       return{
         ...state
@@ -80,12 +49,6 @@ export function reducer(state = initialState, action: feedAction.Action) : State
           : [...state.feed, feed]
       }
 
-    }
-    case feedAction.LOAD_FEED_FAIL: {
-      return{
-        ...state,
-        feed: []
-      }
     }
     default: {
       return state

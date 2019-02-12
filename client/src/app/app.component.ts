@@ -7,15 +7,13 @@ import {Observable, Subscription} from "rxjs/index";
 import {User} from "./model/User";
 import {Store} from "@ngrx/store";
 import {Feed, FeedStatus} from "./model/Feed";
-import {PusherService} from "./store/services/PusherService";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [PusherService]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   users$: Observable<User[]>;
   feed$: Observable<Feed[]>;
   selectUser$: Observable<User>;
@@ -23,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   msgCounter: number = 0;
   currentText: string = '';
 
-  constructor(private store: Store<fromRoot.State>, private pusherService: PusherService) {
+  constructor(private store: Store<fromRoot.State>) {
     this.users$ = store.select(fromRoot.getAllUsers);
     this.feed$ = store.select(fromRoot.getAllFeed);
     this.selectUser$ = store.select(fromRoot.getSelectUser);
@@ -32,22 +30,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(new userAction.LoadUsers(null));
   }
 
-  ngOnInit(){
-    this.selectUser$.subscribe(s => { //todo unsubscribe
+  ngOnInit() {
+    this.selectUser$.subscribe(s => {
       this.user = s; //todo ?
     });
 
     this.feed$.subscribe(s => { //todo ?
       this.msgCounter = s.length;
     });
-
   }
 
-  ngOnDestroy(){
-
-  }
-
-  select(user: User){
+  select(user: User) {
     this.store.dispatch(new userAction.Select(user));
   }
 
@@ -64,10 +57,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(new feedAction.RecoverOne(msg));
   }
 
-  add(){
+  add() {
+    let u = this.user ? this.user : {id: -1, name: "неизвестно"};
+
     let msg: Feed = {
-      author: this.user.name,
-      authorId: this.user.id,
+      author: u.name,
+      authorId: u.id,
       content: this.currentText,
       createdAt: new Date(),
       id: this.msgCounter + 1, //todo: need to get from the server not a client
