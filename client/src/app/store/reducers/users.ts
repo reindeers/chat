@@ -73,31 +73,23 @@ export function reducer(state = initialState, action: userAction.Action) : State
       }
     }
     case userAction.INC_COUNTER: {
-      const id = action.payload;
       return {
-        ...state,
-        users: state.ids.map(id0 => {
-          if (id0 != id) {
-            let user = state.users[id0];
-            user.counter++;
-            return user
-          };
-          return state.users[id0]
-        })
+        ...state
       }
     }
     case userAction.DEC_COUNTER: {
-      const id = action.payload;
       return {
-        ...state,
-        users: state.ids.map(id0 => {
-          if (id0 != id) {
-            let user = state.users[id0];
-            user.counter--;
-            return user
-          };
-          return state.users[id0]
-        })
+        ...state
+      }
+    }
+    case userAction.INC_COUNTER_SUCCESS: {
+      return {
+        ...state
+      }
+    }
+    case userAction.DEC_COUNTER_SUCCESS: {
+      return {
+        ...state
       }
     }
     case userAction.LOAD_USERS_SUCCESS: {

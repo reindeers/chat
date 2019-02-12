@@ -46,28 +46,12 @@ export class PusherService {
     );
 
     channelUser.bind(
-      'dec',
-      (data: { id: number, name: string, group: UserGroup, counter: number, lastLogin: Date }) => {
-        this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group, counter: data.counter == 0 ? 0 : data.counter - 1, lastLogin: data.lastLogin}
-        )
-      }
-    );
-    channelUser.bind(
-      'inc',
-      (data: { id: number, name: string, group: UserGroup, counter: number, lastLogin: Date }) => {
-        this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group, counter: data.counter + 1, lastLogin: data.lastLogin}
-        )
-      }
-    );
-
-    channelUser.bind(
-      'user',
-      (data: { id: number, name: string, group: UserGroup, counter: number, lastLogin: Date }) => {
-        this.subjectUser.next(
-          {id: data.id, name: data.name, group: data.group, counter: data.counter, lastLogin: data.lastLogin}
-        )
+      'count',
+      (data: User[]) => {
+        for (let us of data)
+          this.subjectUser.next(
+            {id: us.id, name: us.name, group: us.group, counter: us.counter, lastLogin: us.lastLogin}
+          )
       }
     );
   }
@@ -111,22 +95,22 @@ export class PusherService {
     return of(msg)
   }
 
-  decCounter(usr: User): Observable<User> {
+  decCounter(id: number): Observable<User> {
     let usrs = this.users.map(u => {
-      if (u.id != usr.id) {
+      if (u.id != id) {
         let us = u;
-        us.counter--;
+        us.counter = us.counter == 0 ? 0 : us.counter - 1;
         return us;
       }
       else return u
     });
     this.http.post('http://localhost:3000/dcounter', {usr: usrs}).subscribe();
-    return of(usr)
+    return of(usrs[id])
   }
 
-  incCounter(usr: User): Observable<User> {
+  incCounter(id: number): Observable<User> {
     let usrs = this.users.map(u => {
-      if (u.id != usr.id) {
+      if (u.id != id) {
         let us = u;
         us.counter++;
         return us;
@@ -134,6 +118,6 @@ export class PusherService {
       else return u
     });
     this.http.post('http://localhost:3000/icounter', {usr: usrs}).subscribe();
-    return of(usr)
+    return of(usrs[id])
   }
 }

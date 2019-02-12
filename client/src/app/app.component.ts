@@ -62,18 +62,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   recover(msg: Feed) {
     this.store.dispatch(new feedAction.RecoverOne(msg));
-    this.store.dispatch(new userAction.IncCounter(msg.authorId))
   }
 
   add(){
-    this.store.dispatch(new feedAction.AddOne({
+    let msg: Feed = {
       author: this.user.name,
       authorId: this.user.id,
       content: this.currentText,
       createdAt: new Date(),
       id: this.msgCounter + 1, //todo: need to get from the server not a client
       status: FeedStatus.ACTIVE
-    }));
+    };
+
+    this.store.dispatch(new feedAction.AddOne(msg));
     this.currentText = '';
+    this.store.dispatch(new userAction.IncCounter(msg.authorId))
   }
 }

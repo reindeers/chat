@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 app.post('/change', (req, res) => {
     const user = req.body;
     try {
-        pusher.trigger('counter', 'user', user);
+        pusher.trigger('counter', 'count', [user]);
     } catch (e) {
     }
     res
@@ -40,9 +40,7 @@ app.post('/change', (req, res) => {
 app.post('/dcounter', (req, res) => {
     const usr: User[] = req.body.usr;
     try {
-        for (var i = 0; i < usr.length; i++){
-            pusher.trigger('counter', 'dec', usr[i]);
-        }
+        pusher.trigger('counter', 'count', usr);
     } catch (e) {
     }
     res
@@ -52,9 +50,7 @@ app.post('/dcounter', (req, res) => {
 app.post('/icounter', (req, res) => {
     const usr: User[] = req.body.usr;
     try {
-        for (var i = 0; i < usr.length; i++){
-            pusher.trigger('counter', 'inc', usr[i]);
-        }
+        pusher.trigger('counter', 'count', usr);
     } catch (e) {
     }
     res

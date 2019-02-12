@@ -35,24 +35,24 @@ export class UserEffects {
     ));
 
   @Effect()
-  decCounter = this.actions$.pipe(
+  decCounter$ = this.actions$.pipe(
     ofType(userAction.DEC_COUNTER),
     mergeMap((action: any) => this.pusherService.decCounter(action.payload)
       .pipe(
         switchMap(m => [
-          new userAction.DecCounter(null)]),
+          new userAction.DecCounterSuccess(null)]),
         catchError(() => EMPTY)
       )
     )
   )
 
   @Effect()
-  incCounter = this.actions$.pipe(
+  incCounter$ = this.actions$.pipe(
     ofType(userAction.INC_COUNTER),
     mergeMap((action: any) => this.pusherService.incCounter(action.payload)
       .pipe(
         switchMap(m => [
-          new userAction.IncCounter(null)]),
+          new userAction.IncCounterSuccess(null)]),
         catchError(() => EMPTY)
       )
     )
