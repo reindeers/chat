@@ -21,7 +21,8 @@ export class MessageComponent {
     this.credentials = {
       "edit_my_msg": ["ADMIN", "USER"],
       "edit_others_msg": ["ADMIN"],
-      "delete_msg": ["ADMIN"]
+      "delete_my_msg": ["ADMIN", "USER"],
+      "delete_others_msg": ["ADMIN"]
     }
   }
 
@@ -33,7 +34,10 @@ export class MessageComponent {
   }
 
   isDeleteMsg(){
-    return this.credentials["delete_msg"].indexOf(this.user.group) != -1;
+    if (this.user.id != this.msg.authorId)
+      return this.credentials["delete_others_msg"].indexOf(this.user.group) != -1;
+    else
+      return this.credentials["delete_my_msg"].indexOf(this.user.group) != -1;
   }
 
   toggleMode(isEdit: boolean){
